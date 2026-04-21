@@ -6,7 +6,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 
 interface VoiceAssistantProps {
   onTranscript: (text: string) => void
-  onSpeak?: (text: string) => void
+  onSpeak?: (speakFn: (text: string) => void) => void
 }
 
 export default function VoiceAssistant({ onTranscript, onSpeak }: VoiceAssistantProps) {

@@ -277,14 +277,14 @@ export default function Home() {
             chat_id: chatActual,
             rol: 'user',
             contenido: mensajeUsuario,
-            personalidad: personalidadData?.id || personalidadData,
+            personalidad: personalidadData || null,
             personaje: personajeData?.nombre || null
           },
           {
             chat_id: chatActual,
             rol: 'assistant',
             contenido: respuestaCompleta,
-            personalidad: personalidadData?.id || personalidadData,
+            personalidad: personalidadData || null,
             personaje: personajeData?.nombre || null
           }
         ])
