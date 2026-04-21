@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Mail, Lock, ArrowLeft, Heart, Chrome } from 'lucide-react'
+import { Mail, Lock, ArrowLeft, Heart } from 'lucide-react'
 import Link from 'next/link'
-import { createClient } from '../lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -14,7 +12,6 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [modo, setModo] = useState<'login' | 'registro'>('login')
   const router = useRouter()
-  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,19 +19,23 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          action: modo === 'login' ? 'login' : 'signup',
+          email, 
+          password 
+        })
+      })
+      
+      const data = await res.json()
+      if (data.error) throw new Error(data.error)
+      
       if (modo === 'registro') {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        })
-        if (error) throw error
-        alert('¡Registro exitoso! Revisa tu correo para confirmar.')
+        alert('¡Registro exitoso! Ahora inicia sesión.')
+        setModo('login')
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        })
-        if (error) throw error
         router.push('/')
         router.refresh()
       }
@@ -45,25 +46,13 @@ export default function LoginPage() {
     }
   }
 
-  const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${window.location.origin}/` }
-    })
-    if (error) setError(error.message)
-  }
-
   return (
     <div className="min-h-screen bg-[#0a0a1a] text-white flex items-center justify-center p-4">
       <Link href="/" className="absolute top-6 left-6 glass-light p-2 rounded-xl hover:bg-white/10">
         <ArrowLeft className="w-5 h-5 text-white/70" />
       </Link>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="glass rounded-3xl p-8 w-full max-w-md border border-white/10"
-      >
+      <div className="glass rounded-3xl p-8 w-full max-w-md border border-white/10">
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
             <Heart className="w-8 h-8 text-white" />
@@ -113,23 +102,12 @@ export default function LoginPage() {
             </div>
           )}
 
-          <motion.button
+          <button
             type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
             disabled={cargando}
             className="w-full py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-xl font-medium disabled:opacity-50"
           >
             {cargando ? 'Cargando...' : modo === 'login' ? 'Iniciar Sesión' : 'Registrarse'}
-          </motion.button>
-
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
-            className="w-full py-3 glass-light rounded-xl text-white font-medium flex items-center justify-center gap-2 hover:bg-white/10"
-          >
-            <Chrome className="w-5 h-5" />
-            Continuar con Google
           </button>
         </form>
 
@@ -142,7 +120,7 @@ export default function LoginPage() {
             {modo === 'login' ? 'Regístrate' : 'Inicia sesión'}
           </button>
         </p>
-      </motion.div>
+      </div>
     </div>
   )
 }
