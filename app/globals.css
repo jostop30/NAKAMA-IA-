@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-color: #0a0a1a;
+    --text-color: #ffffff;
+  }
+
+  .light {
+    --bg-color: #f8fafc;
+    --text-color: #0f172a;
+  }
+
+  body {
+    @apply bg-[#0a0a1a] text-white;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-white/5 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-pink-500 to-purple-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gradient-to-b from-pink-400 to-purple-500;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+  
+  .glass-light {
+    @apply backdrop-blur-md bg-white/10 border border-white/5;
+  }
+
+  .progress-neon {
+    @apply h-2 bg-white/10 rounded-full overflow-hidden;
+  }
+
+  .progress-neon-fill {
+    @apply h-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500;
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-aurora {
+    animation: aurora 15s ease infinite;
+    background-size: 400% 400%;
+  }
+}

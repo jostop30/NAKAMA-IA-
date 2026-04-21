@@ -1,0 +1,58 @@
+nakama-ai/
+├── app/
+│   ├── api/
+│   │   ├── chat/
+│   │   │   └── route.ts
+│   │   ├── generar-imagen/
+│   │   │   └── route.ts
+│   │   ├── desafios/
+│   │   │   ├── route.ts
+│   │   │   └── generar/route.ts
+│   │   ├── anime/
+│   │   │   ├── tendencias/route.ts
+│   │   │   └── buscar/route.ts
+│   │   └── usuario/
+│   │       ├── progreso/route.ts
+│   │       └── preferencias/route.ts
+│   ├── componentes/
+│   │   ├── ChatNakama.tsx
+│   │   ├── GrillaBento.tsx
+│   │   ├── AvatarTsundere.tsx
+│   │   ├── SelectorPersonalidad.tsx
+│   │   ├── NivelOtaku.tsx
+│   │   ├── DesafioTrivia.tsx
+│   │   ├── GeneradorArte.tsx
+│   │   ├── ReproductorAnime.tsx
+│   │   ├── ListaAnime.tsx
+│   │   └── EfectosVisuales.tsx
+│   ├── lib/
+│   │   ├── nakama-nucleo.ts
+│   │   ├── personalidades.ts
+│   │   ├── cliente-supabase.ts
+│   │   ├── api-jikan.ts
+│   │   └── generador-desafios.ts
+│   ├── hooks/
+│   │   ├── useChatNakama.ts
+│   │   ├── useDatosAnime.ts
+│   │   └── useNivelOtaku.ts
+│   ├── contexto/
+│   │   └── ContextoNakama.tsx
+│   ├── tipos/
+│   │   └── index.ts
+│   ├── utilidades/
+│   │   └── ayudantes.ts
+│   ├── layout.tsx
+│   ├── pagina.tsx
+│   └── globals.css
+├── publico/
+│   ├── sonidos/
+│   │   ├── notificacion.mp3
+│   │   └── subida-nivel.mp3
+│   └── imagenes/
+│       └── fondo-anime.jpg
+├── .env.local
+├── package.json
+├── tailwind.config.js
+├── next.config.js
+├── tsconfig.json
+└── README.md
